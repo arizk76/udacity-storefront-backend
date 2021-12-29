@@ -1,6 +1,8 @@
 import express, {Application, Request, Response} from 'express';
+import helmet from 'helmet';
 
 const app: Application = express();
+app.use(helmet());
 
 const port: number = 5000;
 const host: string = 'localhost'
