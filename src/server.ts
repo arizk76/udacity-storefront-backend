@@ -4,8 +4,8 @@ import helmet from 'helmet';
 const app: Application = express();
 app.use(helmet());
 
-const port: number = 5000;
-const host: string = 'localhost';
+const port = 5000;
+const host = 'localhost';
 
 app.listen(port, host, () =>
     console.log('Server ' + host + ' is listening on port ' + port)
