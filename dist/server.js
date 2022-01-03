@@ -11,6 +11,6 @@ const port = 5000;
 const host = 'localhost';
 app.listen(port, host, () => console.log('Server ' + host + ' is listening on port ' + port));
 app.get('/', (req, res) => {
-    res.status(200).send('Server is running successfully!');
+    res.status(200).send('Server is running successfully!!');
 });
 exports.default = app;

@@ -12,7 +12,7 @@ app.listen(port, host, () =>
 );
 
 app.get('/', (req: Request, res: Response) => {
-    res.status(200).send('Server is running successfully!');
+    res.status(200).send('Server is running successfully!!');
 });
 
 export default app;
