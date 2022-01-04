@@ -1,7 +1,9 @@
 import express, { Application, Request, Response } from 'express';
+import bodyParser from 'body-parser';
 import helmet from 'helmet';
 
 const app: Application = express();
+app.use(bodyParser.json());
 app.use(helmet());
 
 const port = 5000;
