@@ -12,5 +12,6 @@
     "database": "store_test",
     "user": "test_user",
     "password": "password123"
-  }
+  },
+  "sql-file": true
 }

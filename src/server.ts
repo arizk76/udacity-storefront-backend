@@ -1,4 +1,6 @@
 import express, { Application, Request, Response } from 'express';
+import usersRoutes from './api/v1/users';
+import productsRoutes from './api/v1/products';
 import bodyParser from 'body-parser';
 import helmet from 'helmet';
 
@@ -16,5 +18,8 @@ app.listen(port, host, () =>
 app.get('/', (req: Request, res: Response) => {
     res.status(200).send('Server is running successfully!!');
 });
+
+usersRoutes(app);
+productsRoutes(app);
 
 export default app;

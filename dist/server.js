@@ -4,6 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const users_1 = __importDefault(require("./api/v1/users"));
+const products_1 = __importDefault(require("./api/v1/products"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const helmet_1 = __importDefault(require("helmet"));
 const app = (0, express_1.default)();
@@ -15,4 +17,6 @@ app.listen(port, host, () => console.log('Server ' + host + ' is listening on po
 app.get('/', (req, res) => {
     res.status(200).send('Server is running successfully!!');
 });
+(0, users_1.default)(app);
+(0, products_1.default)(app);
 exports.default = app;
