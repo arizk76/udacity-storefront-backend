@@ -17,7 +17,7 @@ const order_1 = require("../../models/order");
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const store = new order_1.OrderStore();
-const addProduct = (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const addOrder = (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const orderId = _req.params.id;
     const productId = _req.body.productId;
     const quantity = parseInt(_req.body.quantity);
@@ -32,7 +32,7 @@ const addProduct = (_req, res) => __awaiter(void 0, void 0, void 0, function* ()
 });
 const ordersRoutes = (app) => {
     // app.get('/api/v1/orders', index);
-    // app.get('/api/v1/orders/:id', show);
+    // app.get('/api/v1/orders/id', show);
     // app.post('/api/v1/orders', create);
     // add product
     app.post('/api/v1/orders/:id/products', jwtAuth_1.default, addProduct);

@@ -17,22 +17,17 @@ const database_1 = __importDefault(require("../database"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 class OrderStore {
-    addProduct(quantity, orderId, productId) {
+    show(id) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const sql = 'INSERT INTO order_products (quantity, order_id, product_id) VALUES($1, $2, $3) RETURNING *';
                 const conn = yield database_1.default.connect();
-                const result = yield conn.query(sql, [
-                    quantity,
-                    orderId,
-                    productId,
-                ]);
-                const order = result.rows[0];
+                const sql = "SELECT * FROM orders WHERE user_id=($1) AND order_status='active'";
+                const result = yield conn.query(sql, [id]);
                 conn.release();
-                return order;
+                return result.rows[0];
             }
             catch (err) {
-                throw new Error(`Could not add product ${productId} to order ${orderId}: ${err}`);
+                throw new Error(`Unable to show the current order by User ${id}. Error: ${err}`);
             }
         });
     }

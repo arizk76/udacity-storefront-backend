@@ -55,23 +55,18 @@ Lint and prettier
 > npm run lint
 > npm run prettier
 
-## Endpoints list
+## Database Information
 
-### Users
+For development and Testing
+HOST 127.0.0.1
+PORT 5432
+USER postgres
+PASSWD postgres
 
--   First create a user and get token POST(http://localhost:5000/api/v1/users) (CREATE) try to create many users
-    Parameters needed ("user_name", "first_name", "last_name" & "password").
+### DEV
 
--   List all users GET(http://localhost:5000/api/v1/users) (INDEX) use token from created user.
-    Parameters needed ("The authorization header with token").
+DB Name: store_dev
 
--   Show user by id GET(http://localhost:5000/api/v1/users/:id) (SHOW) use token from created user.
-    Parameters needed ("The authorization header with token" and "id").
+### TEST
 
-### products
-
--   Create a new product POST(http://localhost:5000/api/v1/products) (CREATE) try to create many products
-    Parameters needed ("The authorization header with token", "name" and "price").
-
--   List all products GET(http://localhost:5000/api/v1/products) (INDEX)
-    No Parameters needed
+DB Name: store_test

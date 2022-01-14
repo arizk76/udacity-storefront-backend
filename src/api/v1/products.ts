@@ -53,6 +53,6 @@ const show = async (req: Request, res: Response) => {
 const productsRoutes = (app: express.Application) => {
     app.post('/api/v1/products', verifyAuth, create);
     app.get('/api/v1/products', index);
-    app.get('/api/v1/products/:id', show);
+    app.get('/api/v1/products/id', show);
 };
 export default productsRoutes;

@@ -69,6 +69,6 @@ const show = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 const usersRoutes = (app) => {
     app.post('/api/v1/users', jwtAuth_1.default, create);
     app.get('/api/v1/users', jwtAuth_1.default, index);
-    app.get('/api/v1/users/:id', jwtAuth_1.default, show);
+    app.get('/api/v1/users/id', jwtAuth_1.default, show);
 };
 exports.default = usersRoutes;

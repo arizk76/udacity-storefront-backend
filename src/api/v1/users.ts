@@ -58,6 +58,6 @@ const show = async (req: Request, res: Response) => {
 const usersRoutes = (app: express.Application) => {
     app.post('/api/v1/users', verifyAuth, create);
     app.get('/api/v1/users', verifyAuth, index);
-    app.get('/api/v1/users/:id', verifyAuth, show);
+    app.get('/api/v1/users/id', verifyAuth, show);
 };
 export default usersRoutes;

@@ -6,7 +6,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 const store = new OrderStore();
 
-const addProduct = async (_req: Request, res: Response) => {
+const addOrder = async (_req: Request, res: Response) => {
     const orderId: string = _req.params.id;
     const productId: string = _req.body.productId;
     const quantity: number = parseInt(_req.body.quantity);
@@ -26,7 +26,7 @@ const addProduct = async (_req: Request, res: Response) => {
 
 const ordersRoutes = (app: express.Application) => {
     // app.get('/api/v1/orders', index);
-    // app.get('/api/v1/orders/:id', show);
+    // app.get('/api/v1/orders/id', show);
     // app.post('/api/v1/orders', create);
     // add product
     app.post('/api/v1/orders/:id/products', verifyAuth, addProduct);
