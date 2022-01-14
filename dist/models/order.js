@@ -65,6 +65,23 @@ class OrderStore {
             }
         });
     }
+    showByUserId(userID) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const conn = yield database_1.default.connect();
+                const sql = 'SELECT * FROM orders WHERE user_id = $1;';
+                const result = yield conn.query(sql, [userID]);
+                conn.release();
+                if (result.rows.length < 1) {
+                    return `There is no Order with User ID ${userID}`;
+                }
+                return result.rows[0];
+            }
+            catch (err) {
+                throw new Error(`Cannot get order ${err}`);
+            }
+        });
+    }
     addProduct(quantity, orderId, productId) {
         return __awaiter(this, void 0, void 0, function* () {
             try {

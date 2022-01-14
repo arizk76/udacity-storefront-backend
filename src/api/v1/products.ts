@@ -36,11 +36,11 @@ const index = async (_req: Request, res: Response) => {
 // Show handler that return only requested Product by id
 const show = async (req: Request, res: Response) => {
     try {
-        const product: Product = await store.show(req.body.id);
+        const product: Product = await store.show(parseInt(req.params.id));
         if (!product) {
             res.status(409);
             res.json(
-                `No product found with ID ${req.body.id} ,please check requested ID and try again.`
+                `No product found with ID ${req.params.id} ,please check requested ID and try again.`
             );
         }
         res.json(product);
@@ -53,6 +53,6 @@ const show = async (req: Request, res: Response) => {
 const productsRoutes = (app: express.Application) => {
     app.post('/api/v1/products', verifyAuth, create);
     app.get('/api/v1/products', index);
-    app.get('/api/v1/products/id', show);
+    app.get('/api/v1/products/:id', show);
 };
 export default productsRoutes;

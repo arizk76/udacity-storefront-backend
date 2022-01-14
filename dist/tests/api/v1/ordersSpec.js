@@ -21,39 +21,32 @@ const admin = {
     last_name: 'user',
     password: 'password@1234',
 };
-const products = [
+const orders = [
     {
-        name: 'Product1',
-        price: 40,
-    },
-    {
-        name: 'Product2',
-        price: 70,
+        user_id: '1',
+        order_status: 'Active',
     },
 ];
 let token;
-describe('Products API Endpoints', () => {
+describe('Orders API Endpoints', () => {
     beforeAll(() => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield request.post('/api/v1/users/admin').send(admin);
         token = response.body;
-        yield request.post('/api/v1/products').send(products[1]);
     }));
-    it('Products CREATE api endpoint working with status 200 and return product', () => __awaiter(void 0, void 0, void 0, function* () {
-        token = 'Bearer ' + token;
+    it('Orders CREATE api endpoint working with status 200 and return order', () => __awaiter(void 0, void 0, void 0, function* () {
+        const token1 = 'Bearer ' + token;
         const response = yield request
-            .post('/api/v1/products')
-            .send(products[0])
-            .set('Authorization', token);
+            .post('/api/v1/orders')
+            .set('Authorization', token1)
+            .send(orders[0]);
         expect(response.status).toBe(200);
         expect(response.body).toBeTruthy();
     }));
-    it('Products INDEX api endpoint working with status 200 and return list of products', () => __awaiter(void 0, void 0, void 0, function* () {
-        const response = yield request.get('/api/v1/products');
-        expect(response.status).toBe(200);
-        expect(response.body).toBeTruthy();
-    }));
-    it('Products SHOW api endpoint working with status 200 and return product with requested ID', () => __awaiter(void 0, void 0, void 0, function* () {
-        const response = yield request.get('/api/v1/products/1');
+    it('Order SHOW api endpoint working with status 200 and return orders with user ID 1', () => __awaiter(void 0, void 0, void 0, function* () {
+        const token2 = 'Bearer ' + token;
+        const response = yield request
+            .get('/api/v1/orders/user/1')
+            .set('Authorization', token2);
         expect(response.status).toBe(200);
         expect(response.body).toBeTruthy();
     }));

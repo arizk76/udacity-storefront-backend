@@ -25,7 +25,7 @@ class UserStore {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const hash = bcrypt_1.default.hashSync(u.password + pepper, parseInt(saltRounds));
-                console.log(hash);
+                // console.log(hash);
                 const conn = yield database_1.default.connect();
                 const sql = `INSERT INTO users (user_name, first_name, last_name, password) VALUES ($1, $2, $3, $4) RETURNING *`;
                 const result = yield conn.query(sql, [
@@ -79,10 +79,10 @@ class UserStore {
             const conn = yield database_1.default.connect();
             const sql = 'SELECT password FROM users WHERE user_name=($1)';
             const result = yield conn.query(sql, [loginId]);
-            console.log(password + pepper);
+            // console.log(password + pepper);
             if (result.rows.length) {
                 const user = result.rows[0];
-                console.log(user);
+                // console.log(user);
                 if (bcrypt_1.default.compareSync(password + pepper, user.password_digest)) {
                     return user;
                 }

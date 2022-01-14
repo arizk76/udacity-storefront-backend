@@ -18,7 +18,6 @@ const create = async (req: Request, res: Response): Promise<User | void> => {
             password: req.body.password,
         };
         const newUser = await store.create(createUser);
-        // console.log(newUser);
         if (process.env.TOKEN_SECRET) {
             token = jwt.sign({ user: newUser }, process.env.TOKEN_SECRET);
             res.json(token);
@@ -41,11 +40,11 @@ const index = async (_req: Request, res: Response) => {
 // Show handler that return only requested user by id
 const show = async (req: Request, res: Response) => {
     try {
-        const user: User = await store.show(req.body.id);
+        const user: User = await store.show(parseInt(req.params.id));
         if (!user) {
             res.status(409);
             res.json(
-                `No user found with ID ${req.body.id} ,please check requested ID and try again.`
+                `No user found with ID ${req.params.id} ,please check requested ID and try again.`
             );
         }
         res.json(user);
@@ -56,8 +55,11 @@ const show = async (req: Request, res: Response) => {
 };
 
 const usersRoutes = (app: express.Application) => {
-    app.post('/api/v1/users', verifyAuth, create);
+    // To create admin first without token
+    app.post('/api/v1/users/admin', create);
+    // Routes for users not admins
     app.get('/api/v1/users', verifyAuth, index);
-    app.get('/api/v1/users/id', verifyAuth, show);
+    app.post('/api/v1/users', verifyAuth, create);
+    app.get('/api/v1/users/:id', verifyAuth, show);
 };
 export default usersRoutes;

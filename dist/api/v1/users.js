@@ -29,7 +29,6 @@ const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             password: req.body.password,
         };
         const newUser = yield store.create(createUser);
-        // console.log(newUser);
         if (process.env.TOKEN_SECRET) {
             token = jsonwebtoken_1.default.sign({ user: newUser }, process.env.TOKEN_SECRET);
             res.json(token);
@@ -54,10 +53,10 @@ const index = (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
 // Show handler that return only requested user by id
 const show = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = yield store.show(req.body.id);
+        const user = yield store.show(parseInt(req.params.id));
         if (!user) {
             res.status(409);
-            res.json(`No user found with ID ${req.body.id} ,please check requested ID and try again.`);
+            res.json(`No user found with ID ${req.params.id} ,please check requested ID and try again.`);
         }
         res.json(user);
     }
@@ -67,8 +66,11 @@ const show = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 const usersRoutes = (app) => {
-    app.post('/api/v1/users', jwtAuth_1.default, create);
+    // To create admin first without token
+    app.post('/api/v1/users/admin', create);
+    // Routes for users not admins
     app.get('/api/v1/users', jwtAuth_1.default, index);
-    app.get('/api/v1/users/id', jwtAuth_1.default, show);
+    app.post('/api/v1/users', jwtAuth_1.default, create);
+    app.get('/api/v1/users/:id', jwtAuth_1.default, show);
 };
 exports.default = usersRoutes;

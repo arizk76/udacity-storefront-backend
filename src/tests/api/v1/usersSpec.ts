@@ -5,39 +5,42 @@ const request = supertest(app);
 
 const users = [
     {
-        user_name: 'testusername1',
-        first_name: 'testfirst1',
-        last_name: 'testlast1',
+        user_name: 'admin',
+        first_name: 'administrator',
+        last_name: 'user',
         password: 'password@1234',
     },
     {
-        user_name: 'testusername2',
-        first_name: 'testfirst2',
-        last_name: 'testlast2',
-        user_password: 'password@1234',
+        user_name: 'username',
+        first_name: 'userfirst',
+        last_name: 'userlast',
+        password: 'password@1234',
     },
 ];
 
-const testID = {
-    id: '1',
-};
-
 let token: string;
 describe('Users API Endpoints', () => {
+    beforeAll(async () => {
+        const response = await request
+            .post('/api/v1/users/admin')
+            .send(users[0]);
+        token = response.body;
+    });
     it('Users CREATE api endpoint working with status 200 and return token', async () => {
-        const response = await request.post('/api/v1/users').send(users[0]);
+        const response = await request.post('/api/v1/users').send(users[1]);
         expect(response.status).toBe(200);
         token = response.body;
         expect(token).toBeTruthy();
     });
 
-    // it('Users INDEX  api endpoint working with status 200 and return list of users', async () => {
-    //     const response = await request
-    //         .get('/api/v1/users')
-    //         .set('Authorization', `Bearer ${token}`);
-    //     expect(response.status).toBe(200);
-    //     expect(response.body).toBeTruthy();
-    // });
+    it('Users INDEX api endpoint working with status 200 and return list of users', async () => {
+        const adminToken = 'Bearer ' + token;
+        const response = await request
+            .get('/api/v1/users')
+            .set('Authorization', adminToken);
+        expect(response.status).toBe(200);
+        expect(response.body).toBeTruthy();
+    });
 
     it('Users INDEX status 401 because of invalid token', async () => {
         const invalidToken =
@@ -49,10 +52,12 @@ describe('Users API Endpoints', () => {
         expect(response.status).toBe(401);
     });
 
-    // it('Users SHOW api endpoint working with status 200 and return user with requested id', async () => {
-    //     const response = await request
-    //         .get('/api/v1/users/:id')
-    //         .set('Authorization', token);
-    //     expect(response.status).toBe(200);
-    // });
+    it('Users SHOW api endpoint working with status 200 and return user with requested ID', async () => {
+        const adminToken = 'Bearer ' + token;
+        const response = await request
+            .get('/api/v1/users/1')
+            .set('Authorization', adminToken);
+        expect(response.status).toBe(200);
+        expect(response.body).toBeTruthy();
+    });
 });

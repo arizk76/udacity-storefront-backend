@@ -50,9 +50,19 @@ const show = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.json(err);
     }
 });
+const showOrderByUserId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const order = yield store.showByUserId(parseInt(req.params.userID));
+        res.json(order);
+    }
+    catch (err) {
+        res.status(400);
+        res.json(err);
+    }
+});
 const addProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const orderId = parseInt(req.params.id);
+        const orderId = parseInt(req.params.orderID);
         const productId = parseInt(req.body.product_id);
         const quantity = parseInt(req.body.quantity);
         const addedProduct = yield store.addProduct(quantity, orderId, productId);
@@ -66,8 +76,9 @@ const addProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 const ordersRoutes = (app) => {
     app.get('/api/v1/orders', jwtAuth_1.default, index);
     app.get('/api/v1/orders/:id', jwtAuth_1.default, show);
+    app.get('/api/v1/orders/user/:userID', jwtAuth_1.default, showOrderByUserId);
     app.post('/api/v1/orders', jwtAuth_1.default, create);
     // add product to cart (open order for user)
-    app.post('/api/v1/orders/:id/products', jwtAuth_1.default, addProduct);
+    app.post('/api/v1/orders/:orderID/products', jwtAuth_1.default, addProduct);
 };
 exports.default = ordersRoutes;

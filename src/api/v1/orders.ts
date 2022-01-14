@@ -40,9 +40,19 @@ const show = async (req: Request, res: Response) => {
     }
 };
 
+const showOrderByUserId = async (req: Request, res: Response) => {
+    try {
+        const order = await store.showByUserId(parseInt(req.params.userID));
+        res.json(order);
+    } catch (err) {
+        res.status(400);
+        res.json(err);
+    }
+};
+
 const addProduct = async (req: Request, res: Response) => {
     try {
-        const orderId: number = parseInt(req.params.id);
+        const orderId: number = parseInt(req.params.orderID);
         const productId: number = parseInt(req.body.product_id);
         const quantity: number = parseInt(req.body.quantity);
         const addedProduct = await store.addProduct(
@@ -60,9 +70,10 @@ const addProduct = async (req: Request, res: Response) => {
 const ordersRoutes = (app: Application) => {
     app.get('/api/v1/orders', verifyAuth, index);
     app.get('/api/v1/orders/:id', verifyAuth, show);
+    app.get('/api/v1/orders/user/:userID', verifyAuth, showOrderByUserId);
     app.post('/api/v1/orders', verifyAuth, create);
     // add product to cart (open order for user)
-    app.post('/api/v1/orders/:id/products', verifyAuth, addProduct);
+    app.post('/api/v1/orders/:orderID/products', verifyAuth, addProduct);
 };
 
 export default ordersRoutes;

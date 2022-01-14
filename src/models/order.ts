@@ -59,6 +59,21 @@ export class OrderStore {
         }
     }
 
+    async showByUserId(userID: number): Promise<Order | string> {
+        try {
+            const conn = await Client.connect();
+            const sql = 'SELECT * FROM orders WHERE user_id = $1;';
+            const result = await conn.query(sql, [userID]);
+            conn.release();
+            if (result.rows.length < 1) {
+                return `There is no Order with User ID ${userID}`;
+            }
+            return result.rows[0];
+        } catch (err) {
+            throw new Error(`Cannot get order ${err}`);
+        }
+    }
+
     async addProduct(
         quantity: number,
         orderId: string | number,

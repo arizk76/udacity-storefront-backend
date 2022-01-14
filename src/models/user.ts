@@ -23,7 +23,7 @@ export class UserStore {
                 u.password + pepper,
                 parseInt(saltRounds)
             );
-            console.log(hash);
+            // console.log(hash);
             const conn = await Client.connect();
             const sql = `INSERT INTO users (user_name, first_name, last_name, password) VALUES ($1, $2, $3, $4) RETURNING *`;
 
@@ -81,12 +81,12 @@ export class UserStore {
 
         const result = await conn.query(sql, [loginId]);
 
-        console.log(password + pepper);
+        // console.log(password + pepper);
 
         if (result.rows.length) {
             const user = result.rows[0];
 
-            console.log(user);
+            // console.log(user);
 
             if (bcrypt.compareSync(password + pepper, user.password_digest)) {
                 return user;
