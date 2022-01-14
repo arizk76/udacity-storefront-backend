@@ -1,6 +1,7 @@
 import express, { Application, Request, Response } from 'express';
 import usersRoutes from './api/v1/users';
 import productsRoutes from './api/v1/products';
+import ordersRoutes from './api/v1/orders';
 import bodyParser from 'body-parser';
 import helmet from 'helmet';
 
@@ -21,5 +22,6 @@ app.get('/', (req: Request, res: Response) => {
 
 usersRoutes(app);
 productsRoutes(app);
+ordersRoutes(app);
 
 export default app;

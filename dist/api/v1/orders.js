@@ -17,11 +17,44 @@ const order_1 = require("../../models/order");
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const store = new order_1.OrderStore();
-const addOrder = (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const orderId = _req.params.id;
-    const productId = _req.body.productId;
-    const quantity = parseInt(_req.body.quantity);
+const create = (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const userId = _req.body.user_id;
+    const orderStatus = _req.body.order_status;
+    const newOrder = { user_id: userId, order_status: orderStatus };
     try {
+        const order = yield store.create(newOrder);
+        res.json(order);
+    }
+    catch (err) {
+        res.status(400);
+        res.json(err);
+    }
+});
+const index = (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const orders = yield store.index();
+        res.json(orders);
+    }
+    catch (err) {
+        res.status(400);
+        res.json(err);
+    }
+});
+const show = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const order = yield store.show(parseInt(req.params.id));
+        res.json(order);
+    }
+    catch (err) {
+        res.status(400);
+        res.json(err);
+    }
+});
+const addProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const orderId = parseInt(req.params.id);
+        const productId = parseInt(req.body.product_id);
+        const quantity = parseInt(req.body.quantity);
         const addedProduct = yield store.addProduct(quantity, orderId, productId);
         res.json(addedProduct);
     }
@@ -31,10 +64,10 @@ const addOrder = (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 const ordersRoutes = (app) => {
-    // app.get('/api/v1/orders', index);
-    // app.get('/api/v1/orders/id', show);
-    // app.post('/api/v1/orders', create);
-    // add product
+    app.get('/api/v1/orders', jwtAuth_1.default, index);
+    app.get('/api/v1/orders/:id', jwtAuth_1.default, show);
+    app.post('/api/v1/orders', jwtAuth_1.default, create);
+    // add product to cart (open order for user)
     app.post('/api/v1/orders/:id/products', jwtAuth_1.default, addProduct);
 };
 exports.default = ordersRoutes;

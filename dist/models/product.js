@@ -38,7 +38,7 @@ class ProductStore {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const conn = yield database_1.default.connect();
-                const sql = 'SELECT name, price FROM products';
+                const sql = 'SELECT id, name, price FROM products';
                 const result = yield conn.query(sql);
                 conn.release();
                 return result.rows;

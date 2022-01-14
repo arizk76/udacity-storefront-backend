@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const users_1 = __importDefault(require("./api/v1/users"));
 const products_1 = __importDefault(require("./api/v1/products"));
+const orders_1 = __importDefault(require("./api/v1/orders"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const helmet_1 = __importDefault(require("helmet"));
 const app = (0, express_1.default)();
@@ -19,4 +20,5 @@ app.get('/', (req, res) => {
 });
 (0, users_1.default)(app);
 (0, products_1.default)(app);
+(0, orders_1.default)(app);
 exports.default = app;
