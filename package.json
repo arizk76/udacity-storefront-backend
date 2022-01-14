@@ -7,7 +7,7 @@
     "watch": "tsc-watch  --onSuccess \"node ./dist/server.js",
     "start": "npm run build && node ./dist/server.js",
     "build": "tsc",
-    "test": "npm run build && jasmine",
+    "test": "npm run build && set ENV=test && db-migrate db:create store_test && db-migrate --env test up && jasmine && db-migrate db:drop store_test",
     "lint": "eslint ./src --ext .ts",
     "prettier": "prettier --config .prettierrc src/**/*.ts --write"
   },
