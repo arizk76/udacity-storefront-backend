@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import verifyAuth from '../../middleware/jwtAuth';
-import { User, UserStore } from '../../models/user';
+import verifyAuth from '../../../middleware/jwtAuth';
+import { User, UserStore } from '../../../models/user';
 import dotenv from 'dotenv';
 
 dotenv.config();

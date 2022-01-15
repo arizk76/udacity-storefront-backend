@@ -12,8 +12,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const jwtAuth_1 = __importDefault(require("../../middleware/jwtAuth"));
-const order_1 = require("../../models/order");
+const jwtAuth_1 = __importDefault(require("../../../middleware/jwtAuth"));
+const order_1 = require("../../../models/order");
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const store = new order_1.OrderStore();

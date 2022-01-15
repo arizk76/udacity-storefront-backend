@@ -1,7 +1,7 @@
 import supertest from 'supertest';
-import app from '../../../server';
-import { User } from '../../../models/user';
-import { Product } from '../../../models/product';
+import app from '../../../../server';
+import { User } from '../../../../models/user';
+import { Product } from '../../../../models/product';
 
 const request = supertest(app);
 const admin: User = {

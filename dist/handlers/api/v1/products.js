@@ -12,65 +12,57 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const jwtAuth_1 = __importDefault(require("../../middleware/jwtAuth"));
-const user_1 = require("../../models/user");
+const jwtAuth_1 = __importDefault(require("../../../middleware/jwtAuth"));
+const product_1 = require("../../../models/product");
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
-let token = '';
-const store = new user_1.UserStore();
-//Create handler api endpoint that return new created user.
+const store = new product_1.ProductStore();
+//Create handler api endpoint that return new created product.
 const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const createUser = {
-            user_name: req.body.user_name,
-            first_name: req.body.first_name,
-            last_name: req.body.last_name,
-            password: req.body.password,
+        const createProduct = {
+            name: req.body.name,
+            price: req.body.price,
         };
-        const newUser = yield store.create(createUser);
-        if (process.env.TOKEN_SECRET) {
-            token = jsonwebtoken_1.default.sign({ user: newUser }, process.env.TOKEN_SECRET);
-            res.json(token);
-        }
+        // console.log(createProduct);
+        const newProduct = yield store.create(createProduct);
+        // console.log(newProduct);
+        res.json(newProduct);
     }
     catch (error) {
         res.status(409);
         res.json(error);
     }
 });
-//Index handler api endpoint that return list of all  users.
+//Index handler api endpoint that return list of all  Products.
 const index = (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const users = yield store.index();
-        res.json(users);
+        const products = yield store.index();
+        res.json(products);
     }
     catch (error) {
         res.status(400);
         res.json(error);
     }
 });
-// Show handler that return only requested user by id
+// Show handler that return only requested Product by id
 const show = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = yield store.show(parseInt(req.params.id));
-        if (!user) {
+        const product = yield store.show(parseInt(req.params.id));
+        if (!product) {
             res.status(409);
-            res.json(`No user found with ID ${req.params.id} ,please check requested ID and try again.`);
+            res.json(`No product found with ID ${req.params.id} ,please check requested ID and try again.`);
         }
-        res.json(user);
+        res.json(product);
     }
     catch (error) {
         res.status(400);
         res.json(error);
     }
 });
-const usersRoutes = (app) => {
-    // To create admin first without token
-    app.post('/api/v1/users/admin', create);
-    // Routes for users not admins
-    app.get('/api/v1/users', jwtAuth_1.default, index);
-    app.post('/api/v1/users', jwtAuth_1.default, create);
-    app.get('/api/v1/users/:id', jwtAuth_1.default, show);
+const productsRoutes = (app) => {
+    app.post('/api/v1/products', jwtAuth_1.default, create);
+    app.get('/api/v1/products', index);
+    app.get('/api/v1/products/:id', show);
 };
-exports.default = usersRoutes;
+exports.default = productsRoutes;

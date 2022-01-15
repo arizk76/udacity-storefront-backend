@@ -1,6 +1,6 @@
 import supertest from 'supertest';
-import app from '../../../server';
-import { User } from '../../../models/user';
+import app from '../../../../server';
+import { User } from '../../../../models/user';
 
 const request = supertest(app);
 const admin: User = {

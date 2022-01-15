@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
-import verifyAuth from '../../middleware/jwtAuth';
-import { Product, ProductStore } from '../../models/product';
+import verifyAuth from '../../../middleware/jwtAuth';
+import { Product, ProductStore } from '../../../models/product';
 
 import dotenv from 'dotenv';
 

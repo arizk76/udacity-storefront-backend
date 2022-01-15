@@ -1,7 +1,7 @@
 import express, { Application, Request, Response } from 'express';
-import usersRoutes from './api/v1/users';
-import productsRoutes from './api/v1/products';
-import ordersRoutes from './api/v1/orders';
+import usersRoutes from './handlers/api/v1/users';
+import productsRoutes from './handlers/api/v1/products';
+import ordersRoutes from './handlers/api/v1/orders';
 import bodyParser from 'body-parser';
 import helmet from 'helmet';
 
