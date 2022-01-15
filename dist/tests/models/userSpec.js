@@ -11,19 +11,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const user_1 = require("../../models/user");
 const store = new user_1.UserStore();
-describe('User Model Test', () => {
+describe('User Model Tests', () => {
     beforeAll(() => __awaiter(void 0, void 0, void 0, function* () {
         yield store.create({
-            user_name: 'admin1',
-            first_name: 'adminFirst',
-            last_name: 'adminLast',
+            user_name: 'admin',
+            first_name: 'administrator',
+            last_name: 'user',
             password: 'password@1234',
         });
     }));
-    it('User model should have a create method', () => {
-        expect(store.create).toBeDefined();
-    });
-    it('User create should add user successfully', () => __awaiter(void 0, void 0, void 0, function* () {
+    it('User model create method should add user successfully', () => __awaiter(void 0, void 0, void 0, function* () {
         const result = yield store.create({
             user_name: 'test_name',
             first_name: 'first_name',
@@ -34,17 +31,16 @@ describe('User Model Test', () => {
         expect(result.first_name).toEqual('first_name');
         expect(result.last_name).toEqual('last_name');
     }));
-    it('User model should have an index method', () => {
-        expect(store.index).toBeDefined();
-    });
-    it('User index should return users successfully', () => __awaiter(void 0, void 0, void 0, function* () {
+    it('User model index method should return users successfully', () => __awaiter(void 0, void 0, void 0, function* () {
         const result = yield store.index();
         expect(result.length).toBeGreaterThanOrEqual(1);
     }));
-    it('User model should have a show method', () => {
-        expect(store.show).toBeDefined();
-    });
-    it('User model should have an authenticate method', () => {
-        expect(store.authenticate).toBeDefined();
-    });
+    it('User model show method should return user name for user ID 1', () => __awaiter(void 0, void 0, void 0, function* () {
+        const result = yield store.show(1);
+        expect(result.user_name).toEqual('admin');
+    }));
+    it('User model authenticate method returning user first_name successfully', () => __awaiter(void 0, void 0, void 0, function* () {
+        const result = yield store.authenticate('admin', 'password@1234');
+        expect(result === null || result === void 0 ? void 0 : result.first_name).toEqual('administrator');
+    }));
 });

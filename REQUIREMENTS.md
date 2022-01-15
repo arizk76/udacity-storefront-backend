@@ -41,6 +41,8 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 ## Data Shapes
 
+![database schema](https://res.cloudinary.com/arizk76/image/upload/v1642267913/store_front_bgdwci.jpg)
+
 ### Product
 
 -   id

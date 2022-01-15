@@ -54,6 +54,25 @@ const show = async (req: Request, res: Response) => {
     }
 };
 
+const login = async (req: Request, res: Response) => {
+    const loginId: string = req.body.user_name;
+    const password: string = req.body.password;
+    try {
+        const user: User | null = await store.authenticate(loginId, password);
+        if (user === null) {
+            res.status(409);
+            res.json(
+                `No user found with ID ${loginId} ,please check login ID and try again.`
+            );
+        } else {
+            res.json(user);
+        }
+    } catch (error) {
+        res.status(400);
+        res.json(error);
+    }
+};
+
 const usersRoutes = (app: express.Application) => {
     // To create admin first without token
     app.post('/api/v1/users/admin', create);
@@ -61,5 +80,6 @@ const usersRoutes = (app: express.Application) => {
     app.get('/api/v1/users', verifyAuth, index);
     app.post('/api/v1/users', verifyAuth, create);
     app.get('/api/v1/users/:id', verifyAuth, show);
+    app.post('/api/v1/users/login', login);
 };
 export default usersRoutes;

@@ -65,6 +65,24 @@ const show = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.json(error);
     }
 });
+const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const loginId = req.body.user_name;
+    const password = req.body.password;
+    try {
+        const user = yield store.authenticate(loginId, password);
+        if (user === null) {
+            res.status(409);
+            res.json(`No user found with ID ${loginId} ,please check login ID and try again.`);
+        }
+        else {
+            res.json(user);
+        }
+    }
+    catch (error) {
+        res.status(400);
+        res.json(error);
+    }
+});
 const usersRoutes = (app) => {
     // To create admin first without token
     app.post('/api/v1/users/admin', create);
@@ -72,5 +90,6 @@ const usersRoutes = (app) => {
     app.get('/api/v1/users', jwtAuth_1.default, index);
     app.post('/api/v1/users', jwtAuth_1.default, create);
     app.get('/api/v1/users/:id', jwtAuth_1.default, show);
+    app.post('/api/v1/users/login', login);
 };
 exports.default = usersRoutes;

@@ -2,19 +2,17 @@ import { UserStore } from '../../models/user';
 
 const store = new UserStore();
 
-describe('User Model Test', () => {
+describe('User Model Tests', () => {
     beforeAll(async () => {
         await store.create({
-            user_name: 'admin1',
-            first_name: 'adminFirst',
-            last_name: 'adminLast',
+            user_name: 'admin',
+            first_name: 'administrator',
+            last_name: 'user',
             password: 'password@1234',
         });
     });
-    it('User model should have a create method', () => {
-        expect(store.create).toBeDefined();
-    });
-    it('User create should add user successfully', async () => {
+
+    it('User model create method should add user successfully', async () => {
         const result = await store.create({
             user_name: 'test_name',
             first_name: 'first_name',
@@ -26,19 +24,18 @@ describe('User Model Test', () => {
         expect(result.last_name).toEqual('last_name');
     });
 
-    it('User model should have an index method', () => {
-        expect(store.index).toBeDefined();
-    });
-    it('User index should return users successfully', async () => {
+    it('User model index method should return users successfully', async () => {
         const result = await store.index();
         expect(result.length).toBeGreaterThanOrEqual(1);
     });
 
-    it('User model should have a show method', () => {
-        expect(store.show).toBeDefined();
+    it('User model show method should return user name for user ID 1', async () => {
+        const result = await store.show(1);
+        expect(result.user_name).toEqual('admin');
     });
 
-    it('User model should have an authenticate method', () => {
-        expect(store.authenticate).toBeDefined();
+    it('User model authenticate method returning user first_name successfully', async () => {
+        const result = await store.authenticate('admin', 'password@1234');
+        expect(result?.first_name).toEqual('administrator');
     });
 });

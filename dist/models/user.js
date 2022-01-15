@@ -77,14 +77,22 @@ class UserStore {
     authenticate(loginId, password) {
         return __awaiter(this, void 0, void 0, function* () {
             const conn = yield database_1.default.connect();
-            const sql = 'SELECT password FROM users WHERE user_name=($1)';
+            const sql = 'SELECT id, user_name, first_name, last_name, password FROM users WHERE user_name=($1)';
             const result = yield conn.query(sql, [loginId]);
             // console.log(password + pepper);
+            const userPlaintextPassword = password + pepper;
+            // console.log(userPlaintextPassword);
             if (result.rows.length) {
                 const user = result.rows[0];
-                // console.log(user);
-                if (bcrypt_1.default.compareSync(password + pepper, user.password_digest)) {
+                const hash = user.password;
+                // console.log(hash);
+                const passwordMatch = bcrypt_1.default.compareSync(userPlaintextPassword, hash);
+                if (passwordMatch) {
                     return user;
+                }
+                else {
+                    console.log('The Password you provide is not matching');
+                    return null;
                 }
             }
             return null;

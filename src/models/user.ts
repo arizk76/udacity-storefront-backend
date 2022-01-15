@@ -77,19 +77,31 @@ export class UserStore {
         password: string
     ): Promise<User | null> {
         const conn = await Client.connect();
-        const sql = 'SELECT password FROM users WHERE user_name=($1)';
+        const sql =
+            'SELECT id, user_name, first_name, last_name, password FROM users WHERE user_name=($1)';
 
         const result = await conn.query(sql, [loginId]);
 
         // console.log(password + pepper);
+        const userPlaintextPassword: string = password + pepper;
+        // console.log(userPlaintextPassword);
 
         if (result.rows.length) {
             const user = result.rows[0];
+            const hash: string = user.password;
 
-            // console.log(user);
+            // console.log(hash);
 
-            if (bcrypt.compareSync(password + pepper, user.password_digest)) {
+            const passwordMatch = bcrypt.compareSync(
+                userPlaintextPassword,
+                hash
+            );
+
+            if (passwordMatch) {
                 return user;
+            } else {
+                console.log('The Password you provide is not matching');
+                return null;
             }
         }
 

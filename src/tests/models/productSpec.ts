@@ -2,17 +2,14 @@ import { ProductStore } from '../../models/product';
 
 const store = new ProductStore();
 
-describe('Product Model Test', () => {
+describe('Product Model Tests', () => {
     beforeAll(async () => {
         await store.create({
             name: 'ProductTest',
             price: 40,
         });
     });
-    it('Product model should have a create method', () => {
-        expect(store.create).toBeDefined();
-    });
-    it('Product create should add Product successfully', async () => {
+    it('Product model create method should add Product successfully', async () => {
         const result = await store.create({
             name: 'productName',
             price: 60,
@@ -21,15 +18,13 @@ describe('Product Model Test', () => {
         expect(result.price).toEqual(60);
     });
 
-    it('Product model should have an index method', () => {
-        expect(store.index).toBeDefined();
-    });
-    it('Product index should return products successfully', async () => {
+    it('Product model index method should return List of products successfully', async () => {
         const result = await store.index();
         expect(result.length).toBeGreaterThanOrEqual(1);
     });
 
-    it('Product model should have a show method', () => {
-        expect(store.show).toBeDefined();
+    it('Product model show method should return requested product ID 1', async () => {
+        const result = await store.show(1);
+        expect(result.id).toEqual(1);
     });
 });
