@@ -44,14 +44,14 @@ export class OrderStore {
         }
     }
 
-    async show(id: number): Promise<Order | string> {
+    async show(id: number): Promise<Order> {
         try {
             const conn = await Client.connect();
             const sql = 'SELECT * FROM orders WHERE id = $1;';
             const result = await conn.query(sql, [id]);
             conn.release();
             if (result.rows.length < 1) {
-                return `There is no Order with ID ${id}`;
+                console.log(`There is no Order with ID ${id}`);
             }
             return result.rows[0];
         } catch (err) {
@@ -59,14 +59,14 @@ export class OrderStore {
         }
     }
 
-    async showByUserId(userID: number): Promise<Order | string> {
+    async showByUserId(userID: number): Promise<Order> {
         try {
             const conn = await Client.connect();
             const sql = 'SELECT * FROM orders WHERE user_id = $1;';
             const result = await conn.query(sql, [userID]);
             conn.release();
             if (result.rows.length < 1) {
-                return `There is no Order with User ID ${userID}`;
+                console.log(`There is no Order with User ID ${userID}`);
             }
             return result.rows[0];
         } catch (err) {

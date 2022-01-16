@@ -56,7 +56,7 @@ class OrderStore {
                 const result = yield conn.query(sql, [id]);
                 conn.release();
                 if (result.rows.length < 1) {
-                    return `There is no Order with ID ${id}`;
+                    console.log(`There is no Order with ID ${id}`);
                 }
                 return result.rows[0];
             }
@@ -73,7 +73,7 @@ class OrderStore {
                 const result = yield conn.query(sql, [userID]);
                 conn.release();
                 if (result.rows.length < 1) {
-                    return `There is no Order with User ID ${userID}`;
+                    console.log(`There is no Order with User ID ${userID}`);
                 }
                 return result.rows[0];
             }

@@ -27,40 +27,30 @@ describe('Order Model Tests', () => {
             name: 'ProductOrder',
             price: 60,
         });
-    }));
-    it('Order model create method should add order successfully', () => __awaiter(void 0, void 0, void 0, function* () {
-        const result = yield store.create({
+        yield store.create({
             user_id: 3,
             order_status: 'Active',
         });
-        expect(result.user_id).toEqual(3);
+    }));
+    it('Order model create method should add order successfully', () => __awaiter(void 0, void 0, void 0, function* () {
+        const result = yield store.create({
+            user_id: 1,
+            order_status: 'Active',
+        });
+        expect(result.user_id).toEqual(1);
         expect(result.order_status).toEqual('Active');
     }));
     it('Order model index method should return a list of orders successfully', () => __awaiter(void 0, void 0, void 0, function* () {
         const result = yield store.index();
-        expect(result).toEqual([
-            {
-                id: 1,
-                user_id: 1,
-                order_status: 'Active',
-            },
-        ]);
+        expect(result.length).toBeGreaterThanOrEqual(1);
     }));
     it('Order model show method should return an order with ID 1', () => __awaiter(void 0, void 0, void 0, function* () {
         const result = yield store.show(1);
-        expect(result).toEqual({
-            id: 1,
-            user_id: 1,
-            order_status: 'Active',
-        });
+        expect(result.id).toEqual(1);
     }));
     it('Order model show method should return an order with User ID 1', () => __awaiter(void 0, void 0, void 0, function* () {
-        const result = yield store.showByUserId(1);
-        expect(result).toEqual({
-            id: 1,
-            user_id: 1,
-            order_status: 'Active',
-        });
+        const result = yield store.showByUserId(3);
+        expect(result.user_id).toEqual(3);
     }));
     it('Order model addProduct method should add a product with the specified quantity successfully', () => __awaiter(void 0, void 0, void 0, function* () {
         const result = yield store.addProduct(12, 1, 1);
