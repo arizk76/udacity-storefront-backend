@@ -19,10 +19,6 @@ describe('Order Model Tests', () => {
             name: 'ProductOrder',
             price: 60,
         });
-        await store.create({
-            user_id: 3,
-            order_status: 'Active',
-        });
     });
 
     it('Order model create method should add order successfully', async () => {
@@ -45,8 +41,8 @@ describe('Order Model Tests', () => {
     });
 
     it('Order model show method should return an order with User ID 1', async () => {
-        const result = await store.showByUserId(3);
-        expect(result.user_id).toEqual(3);
+        const result = await store.showByUserId(1);
+        expect(result.user_id).toEqual(1);
     });
 
     it('Order model addProduct method should add a product with the specified quantity successfully', async () => {

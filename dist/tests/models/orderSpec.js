@@ -27,10 +27,6 @@ describe('Order Model Tests', () => {
             name: 'ProductOrder',
             price: 60,
         });
-        yield store.create({
-            user_id: 3,
-            order_status: 'Active',
-        });
     }));
     it('Order model create method should add order successfully', () => __awaiter(void 0, void 0, void 0, function* () {
         const result = yield store.create({
@@ -49,8 +45,8 @@ describe('Order Model Tests', () => {
         expect(result.id).toEqual(1);
     }));
     it('Order model show method should return an order with User ID 1', () => __awaiter(void 0, void 0, void 0, function* () {
-        const result = yield store.showByUserId(3);
-        expect(result.user_id).toEqual(3);
+        const result = yield store.showByUserId(1);
+        expect(result.user_id).toEqual(1);
     }));
     it('Order model addProduct method should add a product with the specified quantity successfully', () => __awaiter(void 0, void 0, void 0, function* () {
         const result = yield store.addProduct(12, 1, 1);
